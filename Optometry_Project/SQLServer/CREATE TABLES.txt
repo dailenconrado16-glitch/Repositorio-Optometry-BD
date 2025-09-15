@@ -1,0 +1,122 @@
+-- Patient
+CREATE TABLE Patient (
+    PatientID INT IDENTITY(1,1) PRIMARY KEY,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    BirthDate DATE,
+    Gender NVARCHAR(10),
+    Phone NVARCHAR(20),
+    Email NVARCHAR(50)
+);
+GO
+
+-- VisualHistory
+CREATE TABLE VisualHistory (
+    HistoryID INT IDENTITY(1,1) PRIMARY KEY,
+    PatientID INT UNIQUE,
+    EyeCondition NVARCHAR(100),
+    LastExamDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID)
+);
+GO
+
+-- Optometrist
+CREATE TABLE Optometrist (
+    OptometristID INT IDENTITY(1,1) PRIMARY KEY,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    LicenseNumber NVARCHAR(20)
+);
+GO
+
+-- Appointment
+CREATE TABLE Appointment (
+    AppointmentID INT IDENTITY(1,1) PRIMARY KEY,
+    PatientID INT,
+    OptometristID INT,
+    AppointmentDate DATETIME,
+    Status NVARCHAR(20),
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
+    FOREIGN KEY (OptometristID) REFERENCES Optometrist(OptometristID)
+);
+GO
+
+-- Measurement
+CREATE TABLE Measurement (
+    MeasurementID INT IDENTITY(1,1) PRIMARY KEY,
+    PatientID INT,
+    Eye NVARCHAR(5),
+    Sphere FLOAT,
+    Cylinder FLOAT,
+    Axis FLOAT,
+    PD FLOAT,
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID)
+);
+GO
+
+-- Frame
+CREATE TABLE Frame (
+    FrameID INT IDENTITY(1,1) PRIMARY KEY,
+    Brand NVARCHAR(50),
+    Model NVARCHAR(50),
+    Price DECIMAL(10,2)
+);
+GO
+
+-- Lens
+CREATE TABLE Lens (
+    LensID INT IDENTITY(1,1) PRIMARY KEY,
+    Type NVARCHAR(50),
+    Price DECIMAL(10,2)
+);
+GO
+
+-- Supplier
+CREATE TABLE Supplier (
+    SupplierID INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Contact NVARCHAR(50),
+    Phone NVARCHAR(20)
+);
+GO
+
+-- Order
+CREATE TABLE [Order] (
+    OrderID INT IDENTITY(1,1) PRIMARY KEY,
+    PatientID INT,
+    OrderDate DATETIME,
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID)
+);
+GO
+
+-- OrderDetail
+CREATE TABLE OrderDetail (
+    OrderDetailID INT IDENTITY(1,1) PRIMARY KEY,
+    OrderID INT,
+    ProductType NVARCHAR(10), -- 'Lens' o 'Frame'
+    ProductID INT,
+    Quantity INT,
+    Price DECIMAL(10,2),
+    FOREIGN KEY (OrderID) REFERENCES [Order](OrderID)
+);
+GO
+
+-- Payment
+CREATE TABLE Payment (
+    PaymentID INT IDENTITY(1,1) PRIMARY KEY,
+    OrderID INT,
+    Amount DECIMAL(10,2),
+    PaymentDate DATETIME,
+    FOREIGN KEY (OrderID) REFERENCES [Order](OrderID)
+);
+GO
+
+-- Delivery
+CREATE TABLE Delivery (
+    DeliveryID INT IDENTITY(1,1) PRIMARY KEY,
+    OrderID INT,
+    DeliveryDate DATETIME,
+    Status NVARCHAR(20),
+    FOREIGN KEY (OrderID) REFERENCES [Order](OrderID)
+);
+GO

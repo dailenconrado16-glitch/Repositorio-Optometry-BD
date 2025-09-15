@@ -1,0 +1,87 @@
+-- Patients
+INSERT INTO Patients (FirstName, LastName, BirthDate, Gender, Phone, Email)
+VALUES 
+('Juan', 'Perez', '1990-05-10', 'Male', '3001234567', 'juan.perez@mail.com'),
+('Maria', 'Lopez', '1985-08-22', 'Female', '3009876543', 'maria.lopez@mail.com');
+GO
+
+-- VisualHistories
+INSERT INTO VisualHistories (PatientID, EyeCondition, LastExamDate)
+VALUES 
+(1, 'Myopia', '2024-01-15'),
+(2, 'Astigmatism', '2024-03-10');
+GO
+
+-- Optometrists
+INSERT INTO Optometrists (FirstName, LastName, LicenseNumber)
+VALUES 
+('Carlos', 'Ramirez', 'OPT1234'),
+('Ana', 'Martinez', 'OPT5678');
+GO
+
+-- Appointments
+INSERT INTO Appointments (PatientID, OptometristID, AppointmentDate, Status)
+VALUES 
+(1, 1, '2025-09-15 09:00', 'Pending'),
+(2, 2, '2025-09-16 14:00', 'Pending');
+GO
+
+-- Measurements
+INSERT INTO Measurements (PatientID, Eye, Sphere, Cylinder, Axis, PD)
+VALUES 
+(1, 'OD', -2.5, -0.5, 180, 62),
+(1, 'OS', -2.0, -0.25, 170, 62),
+(2, 'OD', -1.0, -0.75, 160, 63),
+(2, 'OS', -1.25, -0.5, 165, 63);
+GO
+
+-- Frames
+INSERT INTO Frames (Brand, Model, Price)
+VALUES 
+('Ray-Ban', 'RB101', 120.50),
+('Oakley', 'OK202', 150.00);
+GO
+
+-- Lenses
+INSERT INTO Lenses (Type, Price)
+VALUES 
+('Single Vision', 80.00),
+('Progressive', 150.00);
+GO
+
+-- Suppliers
+INSERT INTO Suppliers (Name, Contact, Phone)
+VALUES 
+('Vision Supplies', 'Luis Gomez', '3012345678'),
+('OpticWorld', 'Carolina Ruiz', '3019876543');
+GO
+
+-- Orders
+INSERT INTO Orders (PatientID, OrderDate)
+VALUES 
+(1, '2025-09-10'),
+(2, '2025-09-11');
+GO
+
+-- OrderDetails
+INSERT INTO OrderDetails (OrderID, ProductType, ProductID, Quantity, Price)
+VALUES
+(1, 'Lens', 1, 2, 160.00),
+(1, 'Frame', 1, 1, 120.50),
+(2, 'Lens', 2, 2, 300.00),
+(2, 'Frame', 2, 1, 150.00);
+GO
+
+-- Payments
+INSERT INTO Payments (OrderID, Amount, PaymentDate)
+VALUES 
+(1, 280.50, '2025-09-10'),
+(2, 450.00, '2025-09-11');
+GO
+
+-- Deliveries
+INSERT INTO Deliveries (OrderID, DeliveryDate, Status)
+VALUES 
+(1, '2025-09-12', 'Delivered'),
+(2, '2025-09-13', 'Pending');
+GO
